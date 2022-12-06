@@ -1,0 +1,31 @@
+version: '3'
+
+networks:
+  web:
+    external: true
+  internal:
+    external: false
+
+services:
+  convo-dev:
+    container_name: convo-web
+    restart: unless-stopped
+    build:
+      context: .
+    environment:
+      # - ENVIRONMENT=development
+      # - SECRET_KEY=randomlongseriesofchars
+      - DEBUG=0
+    image: onexspace/convo-web
+    command: python manage.py runserver  0.0.0.0:8000
+    volumes:
+    - .:/convo-web
+    labels:
+      - traefik.http.routers.convo-web.rule=Host(`convo.wecodex.live`)
+      - traefik.http.routers.convo-web.tls=true
+      - traefik.http.routers.convo-web.tls.certresolver=lets-encrypt
+      - traefik.port=8000
+
+    networks:
+      - web
+      - internal

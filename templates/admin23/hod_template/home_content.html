@@ -1,0 +1,419 @@
+{% extends 'admin23/hod_template/base_template.html' %}
+
+{% block main_content %}
+
+{% load static %}
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+      integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+  <link rel="stylesheet" href="{% static 'blog/css/pagination_blue.css' %}">
+</head>
+
+<style></style>
+
+<section class="content">
+        <div class="container-fluid">
+          <!-- Small boxes (Stat box) -->
+          <div class="row">
+            <div class="col-lg-3 col-6">
+              <!-- small box -->
+              <div class="small-box bg-info">
+                <div class="inner">
+                  <h3>{{ students }}</h3>
+
+                  <p>Total Students</p>
+                </div>
+                <div class="icon">
+                  <i class="ion ion-stats-bars"></i>
+                </div>
+              </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+              <!-- small box -->
+              <div class="small-box bg-danger">
+                <div class="inner">
+                  <h3>{{ faculty }}</h3>
+
+                  <p>Total Staffs</p>
+                </div>
+                <div class="icon">
+                  <i class="ion ion-stats-bars"></i>
+                </div>
+              </div>
+            </div>
+            <!-- ./col -->
+            
+            <div class="col-lg-3 col-6">
+              <!-- small box -->
+              <div class="small-box bg-warning">
+                <div class="inner">
+                  <h3>{{ colleges }}</h3>
+
+                  <p>Total Colleges</p>
+                </div>
+                <div class="icon">
+                  <i class="ion ion-stats-bars"></i>
+                </div>
+              </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+              <!-- small box -->
+              <div class="small-box bg-success">
+                <div class="inner">
+                  <h3>{{ teams }}</h3>
+
+                  <p>Total Teams</p>
+                </div>
+                <div class="icon">
+                  <i class="ion ion-stats-bars"></i>
+                </div>
+              </div>
+            </div>
+            <!-- ./col -->
+            
+          </div>
+          <!-- /.row -->
+          <div class="row">
+            <div class="col-lg-6">
+              <!-- PIE CHART -->
+              <div class="card card-warning">
+                <div class="card-header">
+                    <h3 class="card-title">Student count By College</h3>
+
+                    <div class="card-tools">
+                    <div class="input-group input-group-sm" style="width: 150px;">
+                        <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+
+                        <div class="input-group-append">
+                        <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body table-responsive p-0">
+                    <table class="table table-hover text-nowrap">
+                    <thead>
+                        <tr>
+                        <th>College Name</th>
+                        <th>No. Of Students</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for college, count in student_count_list_in_college.items %}
+                        <tr>
+                        <td>{{ college }}</td>
+                        <!-- <td>{{ college_name_list }}</td> -->
+                        <td>{{ count }}</td>
+             
+                        </tr>
+                        {% endfor %}
+                        
+                    </tbody>
+                    </table>
+                </div>
+                <!-- /.card-body -->
+                </div>
+              <!-- /.card -->
+            </div>
+
+            <div class="col-lg-6">
+              <!-- DONUT CHART -->
+                <div class="card card-warning">
+                  <div class="card-header">
+                      <h3 class="card-title">Team count By College</h3>
+  
+                      <div class="card-tools">
+                      <div class="input-group input-group-sm" style="width: 150px;">
+                          <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+  
+                          <div class="input-group-append">
+                          <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                          </div>
+                      </div>
+                      </div>
+                  </div>
+                  <!-- /.card-header -->
+                  <div class="card-body table-responsive p-0">
+                      <table class="table table-hover text-nowrap">
+                      <thead>
+                          <tr>
+                          <th>College Name</th>
+                          <th>No. Of Teams</th>
+  
+                          </tr>
+                      </thead>
+                      <tbody>
+                          {% for college, count in college_team_count.items %}
+                          <tr>
+                          <td>{{ college }}</td>
+                          <!-- <td>{{ college_name_list }}</td> -->
+                          <td>{{ count }}</td>
+                          <!-- <td>{{ count }}</td> -->
+
+               
+                          </tr>
+                          {% endfor %}
+                          
+                      </tbody>
+                      </table>
+                  </div>
+                  <!-- /.card-body -->
+                  </div>
+                <!-- /.card-body -->
+              </div>
+              <!-- /.card -->
+              
+            </div>
+          </div>
+
+          <div class="row">
+
+            <div class="col-lg-6">
+              <!-- DONUT CHART -->
+                <div class="card card-info">
+                  <div class="card-header">
+                      <h3 class="card-title">Day Wise Repose [Last Day]</h3>
+  
+                      <div class="card-tools">
+                      <div class="input-group input-group-sm" style="width: 150px;">
+                          <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+  
+                          <div class="input-group-append">
+                          <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                          </div>
+                      </div>
+                      </div>
+                  </div>
+                  <!-- /.card-header -->
+                  <div class="card-body table-responsive p-0">
+                      <table class="table table-hover text-nowrap">
+                      <thead>
+                          <tr>
+                          <th>College Name</th>
+                          <th>Total Students Present</th>
+                          <th>Total Students Absent</th>
+                          <th>Day</th>
+  
+                          </tr>
+                      </thead>
+                      <tbody>
+                          {% for college, count in clg_att_day.items %}
+                          <tr>
+                          <td>{{ college }}</td>
+                          <!-- <td>{{ college_name_list }}</td> -->
+                          <td>{{ count.0 }}</td>
+                          <td>{{ count.1 }}</td>
+                          <td>{{date}}</td>
+
+               
+                          </tr>
+                          {% endfor %}
+                          
+                      </tbody>
+                      </table>
+                  </div>
+                  <!-- /.card-body -->
+                  </div>
+                <!-- /.card-body -->
+              </div>
+            <div class="col-lg-6">
+              <!-- PIE CHART -->
+              <div class="card card-info">
+                <div class="card-header">
+                    <h3 class="card-title">Day Wise Report All Days</h3>
+
+                    <div class="card-tools">
+                    <div class="input-group input-group-sm" style="width: 150px;">
+                        <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+
+                        <div class="input-group-append">
+                        <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                <!-- /.card-header -->
+                <form method="get" style="margin: 20px;">
+
+                  {{filter2.form}}
+  
+                  <button class="btn btn-primary" type="submit">
+                    Search
+                  </button>
+                </form>
+
+
+                <div class="card-body table-responsive p-0">
+<form method="get">
+                    <table class="table table-hover text-nowrap">
+                    <thead>
+                        <tr>
+                        <th>College Name</th>
+                        <th>No.of Present</th>
+                        <th>No.of Absent</th>
+                        <th>Date</th>
+
+
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in all_day_data %}
+                        <tr>
+                        <td>{{ i.2 }}</td>
+                        <!-- <td>{{ college_name_list }}</td> -->
+                        <td>{{ i.0 }}</td>
+                        <td>{{ i.1 }}</td>
+
+                        <td>{{ i.3 }}</td>
+
+             
+                        </tr>
+                        {% endfor %}
+                        
+                    </tbody>
+                    </table>
+                  </form>
+                </div>
+                <!-- /.card-body -->
+                </div>
+            </div>
+          </div>
+
+        <div class="row">
+          <div class="col-lg-12">
+            <!-- BAR CHART -->
+            <div class="card">
+              <div class="card-header">
+                  <h3 class="card-title">GD Details</h3>
+  
+                  <div class="card-tools">
+                  <div class="input-group input-group-sm" style="width: 150px;">
+                      <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+  
+                      <div class="input-group-append">
+                      <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                      </div>
+                  </div>
+                  </div>
+              </div>
+              <!-- /.card-header -->
+
+
+              <div class="card-body table-responsive p-0">
+                
+              <form action="" method="GET" style="margin: 20px;">
+
+                {{filter.form}}
+
+                <button class="btn btn-primary" type="submit">
+                  Search
+                </button>
+              </form>
+                  <table class="table table-hover text-nowrap">
+                  <thead>
+                      <tr>
+                      <th>ID</th>
+                      <th>First Name</th>
+                      <!-- <th>Email</th> -->
+                      <th>Team</th>
+                      <th>Day</th>
+                      <th>College</th>
+                      <th>Mentor</th>
+                      <th>Last GD</th>
+                      <th>Status</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      {% for std in all_students %}
+                      <tr>
+                      <td>{{ std.stud_id.stud_id }}</td>
+                      <td>{{ std.stud_id.f_name }}</td>
+                      <!-- <td>{{ std.stud_id.l_name }}</td> -->
+                      <td>{{ std.stud_id.team_id.team_id }}</td>
+                      <td>{{ std.stud_id.class_id.class_id }}</td>
+                      <td>{{ std.stud_id.college_id.college_id }}</td>
+                      <td>{{ std.fac_id.f_name }}</td>
+                      <td>{{ std.date }}</td>
+                      <td>{{ std.presence }}</td>
+      
+                      </tr>
+                      {% endfor %}
+                      
+                  </tbody>
+                  </table>
+                  {% if all_students.has_other_pages %}
+                  {% if all_students.paginator.num_pages > 1 %}
+
+                  {% if all_students.has_previous %}
+              
+                      <a href="?page={{ all_students.previous_page_number }}">previous</a>
+              
+                  {% endif %}
+              
+                  <span>Page {{ all_students.number }} of {{ all_students.paginator.num_pages }}</span>
+              
+                  {% if all_students.has_next %}
+              
+                      <a href="?page={{ all_students.next_page_number }}">next</a>
+              
+                  {% endif %}
+              
+              {% endif %}
+{% endif %}
+              </div>
+              <!-- /.card-body -->
+              </div>
+            <!-- /.card -->
+          </div>
+
+
+          <div class="col-lg-6">
+            
+          </div>
+        
+        </div>
+
+        <div class="row">
+          <div class="col-lg-12">
+            <!-- BAR CHART -->
+            <div class="card card-success">
+              <div class="card-header">
+                <h3 class="card-title">Student Attendance vs Leave</h3>
+
+                <div class="card-tools">
+                  <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i>
+                  </button>
+                  <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="chart">
+                  <canvas id="barChart2" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                </div>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+
+
+          <div class="col-lg-6">
+            
+          </div>
+        
+        </div>
+
+        </div><!-- /.container-fluid -->
+      </section>
+
+  {% endblock main_content %}
